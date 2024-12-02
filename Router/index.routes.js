@@ -1,9 +1,8 @@
-const express = require('express')
-const app = express()
+import express from 'express'; 
 const router = express.Router(); 
 
 router.get('/home', (req, res) => {
-    res.render('index')
+    res.render('home')
 })
 
 
