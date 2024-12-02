@@ -4,6 +4,7 @@ import userRouter from './Router/user.routes.js';
 import dbConnection from './models/db.js'
 import userModel from './models/user.js'
 import cookieParser from 'cookie-parser'
+import indexRouter from './Router/index.routes.js'
 dbConnection()
 dotenv.config();
 const app = express();
@@ -16,10 +17,7 @@ app.use(express.json());
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
 
-app.get('/' , (req , res)=>{
-   res.render('index')
-})
-
+app.use('/' , indexRouter)
 app.use('/user', userRouter);
 
 app.listen(port, () => console.log('> Server is up and running on port: ' + port));
