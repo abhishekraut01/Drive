@@ -1,10 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import userRouter from './Router/user.routes.js';
-
+import dbConnection from './models/db.js'
+import userModel from './models/user.js'
+dbConnection()
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Set up EJS as the view engine
