@@ -14,8 +14,7 @@
     <main class="h-screen w-screen bg-gray-800 flex flex-col items-center justify-center h-screen">
         <button class="btn-selectFile bg-blue-600 py-4 px-4 rounded-md ">Upload File</button>
 
-        <div
-            class="pop-up hidden top-0 left-0 flex flex-col justify-center items-center h-screen w-full fixed  backdrop-blur">
+        <div class="pop-up hidden top-0 left-0 flex flex-col justify-center items-center h-screen w-full fixed  backdrop-blur">
 
 
             <form id="uploadForm" enctype="multipart/form-data">
@@ -48,7 +47,20 @@
 
         </div>
 
+        <div class="user-files flex mt-5 gap-2 w-1/2 flex-col">
+            <% files.forEach(element => { %>
+                <div class="elem rounded-md w-full h-12 mt-2 bg-gray-400 flex items-center justify-between px-2 text-md">
+                    <h1><%= element.originalname %></h1>
+                    <a href="/download/<%=element.path%>" download="<%= element.originalname %>">
+                        <i class="text-green-700 text-xl ri-download-line"></i>
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+        
+
     </main>
+
 
     <script>
         const btn1 = document.querySelector('.btn-selectFile')
