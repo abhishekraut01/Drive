@@ -102,7 +102,7 @@ router.post(
       email: user.email
     },process.env.SECRET_KEY)
 
-    res.cookie("token" ,  token)
+    res.cookie("token",token)
 
     res.send({ msg: 'Logged in successfully' });
   } 
