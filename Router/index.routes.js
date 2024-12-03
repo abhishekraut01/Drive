@@ -6,18 +6,23 @@ import upload from '../Config/multer.config.js'; // Multer config for handling f
 import supabase from '../Config/supabase.config.js'; // Supabase client setup
 
 import filesModel from '../models/files.model.js';
+import authMiddleware from '../middlewares/auth.js';
 
 // Route to render the home page
-router.get('/home', (req, res) => {
+router.get('/home', authMiddleware, (req, res) => {
     res.render('home');
 });
 
 // Route to handle file uploads
-router.post('/upload', upload.single('file'), async (req, res) => {
+router.post('/upload', authMiddleware, upload.single('file'), async (req, res) => {
     const clientFile = req.file;
 
     if (!clientFile) {
         return res.status(400).send('No file uploaded.');
+    }
+
+    if (!req.user || !req.user.id) {
+        return res.status(400).send('User is not authenticated or user ID is missing.');
     }
 
     try {
@@ -26,7 +31,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
         // Upload the file to Supabase Storage
         const { data, error } = await supabase.storage
-            .from('drive') 
+            .from('drive')
             .upload(`uploads/${uniqueFileName}`, clientFile.buffer, {
                 contentType: clientFile.mimetype,
             });
@@ -36,26 +41,35 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             return res.status(500).send('Failed to upload file.');
         }
 
-        // Generate a signed URL (for private buckets)
+        // Generate a signed URL (if private bucket)
         const { signedURL, error: urlError } = await supabase.storage
-            .from('drive') // Same bucket name
-            .createSignedUrl(`uploads/${uniqueFileName}`, 60); // 60 seconds expiry time
+            .from('drive')
+            .createSignedUrl(`uploads/${uniqueFileName}`, 60);
 
         if (urlError) {
             console.error('Error generating signed URL:', urlError);
             return res.status(500).send('Failed to generate signed URL.');
         }
 
-        res.status(200).send({
-            message: 'File uploaded successfully!',
-            fileUrl: signedURL,
+        // Save file details to the database
+        const newFile = await filesModel.create({
+            originalname: clientFile.originalname, // Ensure the spelling matches schema
+            path: uniqueFileName,
+            user: req.user.id,
         });
 
+        // Send a single response containing all details
+        res.status(201).json({
+            message: 'File uploaded successfully!',
+            fileUrl: signedURL,
+            fileDetails: newFile,
+        });
     } catch (err) {
-        console.error('Unexpected error:', err);
+        console.error('Unexpected error during file upload:', err);
         res.status(500).send('Server error during file upload.');
     }
 });
+
 
 
 

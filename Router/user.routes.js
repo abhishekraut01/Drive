@@ -104,7 +104,7 @@ router.post(
 
     res.cookie("token",token)
 
-    res.send({ msg: 'Logged in successfully' });
+    res.render("home")
   } 
 );
 
