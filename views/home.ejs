@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drive Clone - File Upload</title>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
 
@@ -14,37 +14,40 @@
     <main class="h-screen w-screen bg-gray-800 flex flex-col items-center justify-center h-screen">
         <button class="btn-selectFile bg-blue-600 py-4 px-4 rounded-md ">Upload File</button>
 
-        <div class="pop-up hidden top-0 left-0 flex flex-col justify-center items-center h-screen w-full fixed  backdrop-blur">
+        <div
+            class="pop-up hidden top-0 left-0 flex flex-col justify-center items-center h-screen w-full fixed  backdrop-blur">
 
 
-           <form 
-           action="/upload-file"
-           method="Post"
-           enctype="multipart/form-data"
-           >
-           <div class="flex items-center justify-center w-full">
-            <label for="dropzone-file"
-                class="flex flex-col items-center justify-center w-96 h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to
-                            upload</span> or drag and drop</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+            <form action="/upload" method="Post" enctype="multipart/form-data">
+                <div class="flex flex-col items-center justify-center w-full">
+                    <label for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-96 h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                    to
+                                    upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
+                            </p>
+                        </div>
+                        <input id="dropzone-file" type="file" class="hidden" name="file" />
+                    </label>
+                    <button type="submit"
+                        class=" btn-2 mt-4 px-8 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Click
+                        me</button>
                 </div>
-                <input id="dropzone-file" type="file" class="hidden" />
-            </label>
-        </div>
-        </form>
-        <button class=" btn-close absolute top-4 right-4 text-gray-100 text-2xl cursor-pointer">
-            <i class="ri-close-large-fill"></i>
-        </button>
-        
+            </form>
+            <button class=" btn-close absolute top-4 right-4 text-gray-100 text-2xl cursor-pointer">
+                <i class="ri-close-large-fill"></i>
+            </button>
 
-            <button  type="submit" class=" btn-2 mt-4 px-8 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Click me</button>
+
+
 
         </div>
 
@@ -52,7 +55,7 @@
 
     <script>
         const btn1 = document.querySelector('.btn-selectFile')
-        const btnClose  = document.querySelector('.btn-close ')
+        const btnClose = document.querySelector('.btn-close ')
         const popUp = document.querySelector('.pop-up')
 
         btn1.addEventListener('click', () => {
@@ -62,7 +65,7 @@
         btnClose.addEventListener('click', () => {
             popUp.style.display = 'none '
         })
-        
+
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
